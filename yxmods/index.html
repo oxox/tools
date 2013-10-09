@@ -12,35 +12,72 @@
     </head>
     <body>
         <style type="text/css">
-            .container{
-                width:730px;
-            }
+            body{padding-top: 70px;padding-bottom: 30px;}
+            .page_list{margin-top:20px;}
+            .row_a{margin-top:20px;}
         </style>
-        <div class="container">
-            <div class="header">
-                <!-- Pages -->
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-info">首页</button>
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
+        
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">首页</a></li>
-                        <li><a href="#">商详</a></li>
-                        <li><a href="#">搜索</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">发现</a></li>
-                    </ul>
+                    <a class="navbar-brand" href="//yixun.com">Yixun Mods builder</a>
                 </div>
-                <h3 class="text-muted">易迅页面模块</h3>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">首页 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">商详</a></li>
+                                <li><a href="#">搜索</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">其他页面</li>
+                                <li><a href="#">发现</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
             </div>
-
-            <div class="row row-a">
+        </div>
+        
+        <div class="container">
+            <div class="row row_a">
                 <div class="col-lg-7">
                     <div id="loading" class="alert alert-info">Loading...</div>
+                    <div id="modTree" class="mod_tree"></div>
                 </div>
                 <div class="col-lg-5">
-                    
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="iptId" class="col-lg-2 control-label">Id</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" id="iptId" placeholder="模块编号"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="iptName" class="col-lg-2 control-label">Name</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" id="iptName" placeholder="模块名称"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="iptYTags" class="col-lg-2 control-label">YTags</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" id="iptYTags" placeholder="多个ytag以|分隔，或填写css选择器"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="submit" class="btn btn-default">保存</button>
+								<button class="btn btn-default">删除</button>
+							</div>
+						</div>
+					</form>
                 </div>
             </div>
 
@@ -52,14 +89,19 @@
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://oxox.io/assets/js/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
     <script src="assets/js/jstree.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script>
         //http://hua-mo.com/xlog/api.php?act=query&callback=asdfasdfasfasdf&xn=xdata&xk=mods
-        var $win = $(window);
-        var modDataProvider = {
+        var $win = $(window),
+            util = {
+                heredoc : function(fn){return (fn.toString().split('\n').slice(1,-1).join('\n') + '\n');},
+                toHtml:function(tpl,obj,ext){tpl = Hogan.compile(tpl);return (tpl.render(obj,ext));}
+            },
+            modDataProvider = {
             url:'http://hua-mo.com/xlog/api.php',
             rock:function(_params,cbk,postData){
 				_params = $.extend({
@@ -70,7 +112,7 @@
                 var xhr = $.ajax({
                     url:url,
                     dataType:'json',
-                    data:postData,
+                    data:JSON.stringify(postData),
                     type:postData?'POST':'GET'
                 });
                 xhr.done(function(d,txtStatus,jqXhr){
@@ -84,10 +126,9 @@
                     act:'query'
                 },function(err,msg){
                     if(err){
-                        $loading.html('Server Error:'+err).addClass('alert-error');
+                        $loading.html('Server Error:'+err).addClass('alert-danger');
                         return;
                     }
-					console.log(msg);
                     var noRecords = msg.code=='0';
                 
                     if (noRecords){
@@ -98,7 +139,7 @@
                     }
 
                     if(msg.code!=='1'){
-                        $loading.html(msg.info).addClass('alert-error');
+                        $loading.html(msg.info).addClass('alert-danger');
                         return;
                     }
 
@@ -111,83 +152,137 @@
                     act:'add'
                 },function(err,msg){
                     if(err){
-                        $loading.html('Server Error:'+err).addClass('alert-error');
+                        $loading.html('Server Error:'+err).addClass('alert-danger');
                         return;
                     }
                     if(msg.code=='0'){
-                        $loading.html(msg.info).addClass('alert-error');
+                        $loading.html(msg.info).addClass('alert-danger');
                         return;
                     }
                     $win.trigger('onTreeDataReady',[modDataProvider.dummyData,true]);
-                },{
-					xv:modDataProvider.dummyData
-				});
+                },modDataProvider.dummyData);
             }
         };
 
         modDataProvider.dummyData = [
         {
-            id:"ic_toolbar",                            //模块id，必须唯一，建议和css类名关联
-            alias: "Toolbar头部工具条",                 //模块名称
-            type: 1,                                    //ytag选择器的类型：1为css选择器，2为多个ytagid以|分隔
-            ytagSelector: ".ic_toolbar",                //ytag选择器的值
-            readonly:true,
-            isCustomYTag:true,
-            babies:[
+            "id":"ic_toolbar",                            //模块id，必须唯一，建议和css类名关联
+            "alias": "Toolbar头部工具条",                 //模块名称
+            "type": 1,                                    //ytag选择器的类型：1为css选择器，2为多个ytagid以|分隔
+            "ytagSelector": ".ic_toolbar",                //ytag选择器的值
+            "readonly":true,
+            "isCustomYTag":true,
+            "babies":[
                 {
-                    id:"mod_entry",
-                    alias: "Toolbar-左侧入口",
-                    type: 1,
-                    ytagSelector: ".mod_entry",
-                    readonly:true,
-                    isCustomYTag:true,
-                    babies:[
+                    "id":"mod_entry",
+                    "alias": "Toolbar-左侧入口",
+                    "type": 1,
+                    "ytagSelector": ".mod_entry",
+                    "readonly":true,
+                    "isCustomYTag":true,
+                    "babies":[
                         {
-                            id:"lnk_qqwangou",
-                            alias: "QQ网购链接",
-                            type: 2,
-                            ytagSelector: "00101",
-                            readonly:true,
-                            isCustomYTag:true
+                            "id":"lnk_qqwangou",
+                            "alias": "QQ网购链接",
+                            "type": 2,
+                            "ytagSelector": "00101",
+                            "readonly":true,
+                            "isCustomYTag":true
                         },
                         {
-                            id:"lnk_paipai",
-                            alias: "拍拍链接",
-                            type: 2,
-                            ytagSelector: "00102",
-                            readonly:true,
-                            isCustomYTag:true
+                            "id":"lnk_paipai",
+                            "alias": "拍拍链接",
+                            "type": 2,
+                            "ytagSelector": "00102",
+                            "readonly":true,
+                            "isCustomYTag":true
                         }
                     ]
                 },
                 {
-                    id:"mod_sitemap",
-                    alias: "Toolbar-右侧入口",
-                    type: 1,
-                    ytagSelector: ".mod_sitemap",
-                    readonly:true,
-                    isCustomYTag:true
+                    "id":"mod_sitemap",
+                    "alias": "Toolbar-右侧入口",
+                    "type": 1,
+                    "ytagSelector": ".mod_sitemap",
+                    "readonly":true,
+                    "isCustomYTag":true
                 }
             ]
         },
         {
-            id:"mod_logo",
-            alias: "网站LOGO",
-            type: 1,
-            ytagSelector: ".mod_logo",
-            readonly:true,
-            isCustomYTag:true
+            "id":"mod_logo",
+            "alias": "网站LOGO",
+            "type": 1,
+            "ytagSelector": ".mod_logo",
+            "readonly":true,
+            "isCustomYTag":true
         }];
 
         var $loading = $('#loading');
 
         //树形菜单
         var tree = {
+            tpl:util.heredoc(function(){/*
+            <ul id="xdataListMore{{pid}}" class="data_list data_list_more">
+                {{#babies}}
+                <li id="xdataCTag{{id}}" class="data_list_item{{cl1}}" data-id="{{id}}">
+                    {{#hasChildren}}
+                        <a id="xdataLnkCTag{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="data_list_lk">{{alias}}</a>
+                        {{>children}}
+                    {{/hasChildren}}
+                    {{^hasChildren}}
+                    <a id="xdataLnkCTag{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="data_list_lk">{{alias}}</a>
+                    {{/hasChildren}}
+                </li>
+                {{/babies}}
+            </ul>
+            */}),
             init:function(){
                 $win.on('onTreeDataReady',function(e,d,first){
-                    $loading.html('初始化树形菜单....').removeClass('alert-error');
-                    console.log(d);
+                    $loading.html('初始化树形菜单....').removeClass('alert-danger');
+                    tree.render(d);
                 });
+            },
+            render:function(d){
+                d = {
+                    id:'0',
+                    babies:d,
+                    isCustomYTag:true
+                };
+                this.parseTreeData(d,'-1');
+                var html = util.toHtml(this.tpl,d,{children:this.tpl});
+                $('#modTree').html(html).jstree({
+                    "plugins" : [ "themes", "html_data" ]
+                });
+                $loading.hide();
+                //console.log(d);
+                
+            },
+            parseTreeData:function(ctag,pid){
+                ctag.pid = pid;
+                ctag = this.parseSingleItem(ctag);
+                if ( (!ctag.babies) || (ctag.babies.length===0) ) {
+                    return ctag;
+                };
+                var len = ctag.babies.length;
+                for(var i =0;i<len;i++){
+                    this.parseTreeData(ctag.babies[i],ctag.id);
+                };//for
+                return ctag;
+            },
+            parseSingleItem:function(tempItem){
+                tempItem.id = tempItem.isCustomYTag?tempItem.id:tempItem.ytagSelector;
+                tempItem.cl1="";
+                tempItem.hasChildren = false;
+                if(tempItem.readonly){
+                    tempItem.cl1=' data_list_item1';
+                }
+                //含子级模块
+                if(tempItem.babies&&tempItem.babies.length>0){
+                    tempItem.cl1+=' data_list_item2';
+                    tempItem.hasChildren = true;
+                }
+                return tempItem;
             }
         };
 
