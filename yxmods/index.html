@@ -5,9 +5,9 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
         <!-- Optional theme -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" href="assets/themes/default/style.css"/>
     </head>
     <body>
@@ -52,27 +52,26 @@
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
     <script src="assets/js/jstree.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script>
         //http://hua-mo.com/xlog/api.php?act=query&callback=asdfasdfasfasdf&xn=xdata&xk=mods
         var $win = $(window);
         var modDataProvider = {
             url:'http://hua-mo.com/xlog/api.php',
-            rock:function(_params,cbk,post){
-
-                _params = $.extend({
-                    xn:'xdata',
-                    xk:'mods_'+(window['yPageId']||'1000')
-                },_params||{});
-
+            rock:function(_params,cbk,postData){
+				_params = $.extend({
+					"xn":"xdata",
+					"xk":"mods_"+(window['yPageId']||'1000')
+				},_params||{});
+				var url = this.url+'?'+$.param(_params,true);
                 var xhr = $.ajax({
-                    url:this.url,
-                    dataType:'jsonp',
-                    data:_params,
-                    type:post?'POST':'GET'
+                    url:url,
+                    dataType:'json',
+                    data:postData,
+                    type:postData?'POST':'GET'
                 });
                 xhr.done(function(d,txtStatus,jqXhr){
                     cbk(null,d);
@@ -88,7 +87,8 @@
                         $loading.html('Server Error:'+err).addClass('alert-error');
                         return;
                     }
-                    var noRecords = typeof(msg.info)==='string' && msg.info.indexOf('has none recorded')>0;
+					console.log(msg);
+                    var noRecords = msg.code=='0';
                 
                     if (noRecords){
                         //初始化数据
@@ -97,7 +97,7 @@
                         return;
                     }
 
-                    if(msg.code=='0'){
+                    if(msg.code!=='1'){
                         $loading.html(msg.info).addClass('alert-error');
                         return;
                     }
@@ -108,8 +108,7 @@
             },
             initData:function(){
                 this.rock({
-                    act:'add',
-                    xv:modDataProvider.dummyData
+                    act:'add'
                 },function(err,msg){
                     if(err){
                         $loading.html('Server Error:'+err).addClass('alert-error');
@@ -120,7 +119,9 @@
                         return;
                     }
                     $win.trigger('onTreeDataReady',[modDataProvider.dummyData,true]);
-                },true);
+                },{
+					xv:modDataProvider.dummyData
+				});
             }
         };
 
