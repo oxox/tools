@@ -1,53 +1,50 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Yixun Page Mods</title>
+        <title>YX Mods Builder</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
         <!-- Optional theme -->
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" href="assets/themes/default/style.css"/>
     </head>
     <body>
         <style type="text/css">
             body{padding-top: 70px;padding-bottom: 30px;}
             .page_list{margin-top:20px;}
             .row_a{margin-top:20px;}
+			.page_switcher{margin-bottom:4px;padding-bottom:4px;border-bottom:1px solid #eee;}
         </style>
         
         <!-- Fixed navbar -->
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="//yixun.com">Yixun Mods builder</a>
+                    <a class="navbar-brand" href="http://yixun.com">YX Mods Builder</a>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">首页 <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">商详</a></li>
-                                <li><a href="#">搜索</a></li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">其他页面</li>
-                                <li><a href="#">发现</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!--/.nav-collapse -->
             </div>
         </div>
         
         <div class="container">
             <div class="row row_a">
                 <div class="col-lg-7">
+					<div class="page_switcher">
+						<div class="btn-group">
+							<button type="button" class="btn btn-info">首页</button>
+							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">首页</a></li>
+								<li><a href="#">商详</a></li>
+								<li><a href="#">搜索</a></li>
+								<li class="divider"></li>
+								<li><a href="#">发现</a></li>
+							</ul>
+						</div>
+						<button type="button" class="btn btn-default">添加模块</button>
+					</div>
                     <div id="loading" class="alert alert-info">Loading...</div>
                     <div id="modTree" class="mod_tree"></div>
                 </div>
@@ -91,7 +88,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://oxox.io/assets/js/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
-    <script src="assets/js/jstree.min.js"></script>
+    <script src="assets/jstree/jstree.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script>
@@ -223,15 +220,15 @@
         //树形菜单
         var tree = {
             tpl:util.heredoc(function(){/*
-            <ul id="xdataListMore{{pid}}" class="data_list data_list_more">
+            <ul id="modList{{pid}}" class="mod_list">
                 {{#babies}}
-                <li id="xdataCTag{{id}}" class="data_list_item{{cl1}}" data-id="{{id}}">
+                <li id="mod{{id}}" class="mod_item{{cl1}}" data-id="{{id}}">
                     {{#hasChildren}}
-                        <a id="xdataLnkCTag{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="data_list_lk">{{alias}}</a>
+                        <a id="modLnk{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="mod_lk">{{alias}}</a>
                         {{>children}}
                     {{/hasChildren}}
                     {{^hasChildren}}
-                    <a id="xdataLnkCTag{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="data_list_lk">{{alias}}</a>
+                    <a id="modLnk{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="mod_lk">{{alias}}</a>
                     {{/hasChildren}}
                 </li>
                 {{/babies}}
@@ -250,10 +247,16 @@
                     isCustomYTag:true
                 };
                 this.parseTreeData(d,'-1');
-                var html = util.toHtml(this.tpl,d,{children:this.tpl});
-                $('#modTree').html(html).jstree({
-                    "plugins" : [ "themes", "html_data" ]
+                var html = util.toHtml(this.tpl,d,{children:this.tpl}),
+					id1 = d.hasChildren?d.babies[0].id:null;
+					
+				this.$tree = $('#modTree').html(html).jstree({
+					"core" : { "multiple":false },
+                    "plugins" : [ "themes", "html_data","ui" ]
                 });
+				if(id1){
+					this.$tree.jstree('open_node', '#mod'+id1);
+				}
                 $loading.hide();
                 //console.log(d);
                 
@@ -275,11 +278,11 @@
                 tempItem.cl1="";
                 tempItem.hasChildren = false;
                 if(tempItem.readonly){
-                    tempItem.cl1=' data_list_item1';
+                    tempItem.cl1=' mod_item1';
                 }
                 //含子级模块
                 if(tempItem.babies&&tempItem.babies.length>0){
-                    tempItem.cl1+=' data_list_item2';
+                    tempItem.cl1+=' mod_item2';
                     tempItem.hasChildren = true;
                 }
                 return tempItem;
