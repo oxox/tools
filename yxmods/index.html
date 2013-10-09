@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Yixun Page Mods</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="assets/themes/default/style.css"/>
+    </head>
+    <body>
+        <style type="text/css">
+            .container{
+                width:730px;
+            }
+        </style>
+        <div class="container">
+            <div class="header">
+                <!-- Pages -->
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-info">首页</button>
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">商详</a></li>
+                        <li><a href="#">搜索</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">发现</a></li>
+                    </ul>
+                </div>
+                <h3 class="text-muted">易迅页面模块</h3>
+            </div>
+
+            <div class="row row-a">
+                <div class="col-lg-7">
+                    <div id="loading" class="alert alert-info">Loading...</div>
+                </div>
+                <div class="col-lg-5">
+                    
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>&copy; OXOX.IO 2013 - <script>document.write(new Date().getFullYear()+1)</script></p>
+            </div>
+
+        </div> <!-- /container -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="assets/js/jstree.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script>
+        //http://hua-mo.com/xlog/api.php?act=query&callback=asdfasdfasfasdf&xn=xdata&xk=mods
+        var $win = $(window);
+        var modDataProvider = {
+            url:'http://hua-mo.com/xlog/api.php',
+            rock:function(_params,cbk,post){
+
+                _params = $.extend({
+                    xn:'xdata',
+                    xk:'mods_'+(window['yPageId']||'1000')
+                },_params||{});
+
+                var xhr = $.ajax({
+                    url:this.url,
+                    dataType:'jsonp',
+                    data:_params,
+                    type:post?'POST':'GET'
+                });
+                xhr.done(function(d,txtStatus,jqXhr){
+                    cbk(null,d);
+                }).fail(function(jqXhr,txtStatus,err){
+                    cbk(err);
+                });
+            },
+            init:function(){
+                this.rock({
+                    act:'query'
+                },function(err,msg){
+                    if(err){
+                        $loading.html('Server Error:'+err).addClass('alert-error');
+                        return;
+                    }
+                    var noRecords = typeof(msg.info)==='string' && msg.info.indexOf('has none recorded')>0;
+                
+                    if (noRecords){
+                        //初始化数据
+                        $loading.html('初始化数据...');
+                        modDataProvider.initData();
+                        return;
+                    }
+
+                    if(msg.code=='0'){
+                        $loading.html(msg.info).addClass('alert-error');
+                        return;
+                    }
+
+                    //初始化树形菜单
+                    $win.trigger('onTreeDataReady',[msg.info.xv]);
+                });
+            },
+            initData:function(){
+                this.rock({
+                    act:'add',
+                    xv:modDataProvider.dummyData
+                },function(err,msg){
+                    if(err){
+                        $loading.html('Server Error:'+err).addClass('alert-error');
+                        return;
+                    }
+                    if(msg.code=='0'){
+                        $loading.html(msg.info).addClass('alert-error');
+                        return;
+                    }
+                    $win.trigger('onTreeDataReady',[modDataProvider.dummyData,true]);
+                },true);
+            }
+        };
+
+        modDataProvider.dummyData = [
+        {
+            id:"ic_toolbar",                            //模块id，必须唯一，建议和css类名关联
+            alias: "Toolbar头部工具条",                 //模块名称
+            type: 1,                                    //ytag选择器的类型：1为css选择器，2为多个ytagid以|分隔
+            ytagSelector: ".ic_toolbar",                //ytag选择器的值
+            readonly:true,
+            isCustomYTag:true,
+            babies:[
+                {
+                    id:"mod_entry",
+                    alias: "Toolbar-左侧入口",
+                    type: 1,
+                    ytagSelector: ".mod_entry",
+                    readonly:true,
+                    isCustomYTag:true,
+                    babies:[
+                        {
+                            id:"lnk_qqwangou",
+                            alias: "QQ网购链接",
+                            type: 2,
+                            ytagSelector: "00101",
+                            readonly:true,
+                            isCustomYTag:true
+                        },
+                        {
+                            id:"lnk_paipai",
+                            alias: "拍拍链接",
+                            type: 2,
+                            ytagSelector: "00102",
+                            readonly:true,
+                            isCustomYTag:true
+                        }
+                    ]
+                },
+                {
+                    id:"mod_sitemap",
+                    alias: "Toolbar-右侧入口",
+                    type: 1,
+                    ytagSelector: ".mod_sitemap",
+                    readonly:true,
+                    isCustomYTag:true
+                }
+            ]
+        },
+        {
+            id:"mod_logo",
+            alias: "网站LOGO",
+            type: 1,
+            ytagSelector: ".mod_logo",
+            readonly:true,
+            isCustomYTag:true
+        }];
+
+        var $loading = $('#loading');
+
+        //树形菜单
+        var tree = {
+            init:function(){
+                $win.on('onTreeDataReady',function(e,d,first){
+                    $loading.html('初始化树形菜单....').removeClass('alert-error');
+                    console.log(d);
+                });
+            }
+        };
+
+        $(function(){
+        
+            modDataProvider.init();
+            tree.init();
+        });
+    </script>
+    </body>
+</html>
