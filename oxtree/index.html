@@ -69,16 +69,16 @@
                             <div id="tip" class="label label-default site_tip">Loading...</div>
                             <div class="panel-heading">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-info">首页</button>
+                                    <button type="button" class="btn btn-info" id="rootTxt">首页</button>
                                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">首页</a></li>
-                                        <li><a href="#">商详</a></li>
-                                        <li><a href="#">搜索</a></li>
+                                        <li><a href="?pid=1000" rel="1000">首页</a></li>
+                                        <li><a href="?pid=6849421" rel="6849421">商详</a></li>
+                                        <li><a href="?pid=7058922" rel="7058922">搜索</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">发现</a></li>
+                                        <li><a href="?pid=610" rel="610">发现</a></li>
                                     </ul>
                                 </div>
                                 <button id="btnAdd" type="button" class="btn btn-default">添加模块</button>
@@ -103,25 +103,25 @@
             <div class="arrow"></div>
             <div class="popover-content">
                 <div class="form-horizontal editor_form" role="form">
-                    <div class="form-group">
+                    <div class="form-group" id="formGroup1">
                         <label for="iptName" class="col-lg-2 control-label">Name</label>
                         <div class="col-lg-10">
                             <input type="text" name="alias" class="form-control" id="iptName" placeholder="模块名称"/>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="formGroup2">
                         <label for="iptYTags" class="col-lg-2 control-label">YTags</label>
                         <div class="col-lg-10">
                             <input type="text" name="ytagSelector" class="form-control" id="iptYTags" placeholder="多个ytag以|分隔，或填写css选择器"/>
                         </div>
                     </div>
                     <div id="formRowType" class="form-group form_row1 hide">
-                        <label for="iptType" class="col-lg-2 control-label">Type</label>
+                        <label for="ddlCreateNodePositionType" class="col-lg-2 control-label">Type</label>
                         <div class="col-lg-10">
-                            <select id="iptType" class="form-control">
-                                <option>子模块</option>
-                                <option>同级模块-靠前</option>
-                                <option>同级模块-靠后</option>
+                            <select id="ddlCreateNodePositionType" class="form-control">
+                                <option value="last">子模块</option>
+                                <option value="before">同级模块-靠前</option>
+                                <option value="after">同级模块-靠后</option>
                             </select>
                         </div>
                     </div>
@@ -134,440 +134,18 @@
                 </div>
             </div>
         </div>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://oxox.io/assets/js/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
-    <script src="assets/jstree/jstree.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script>
-        //http://log.oxox.io/api.php?act=query&callback=asdfasdfasfasdf&xn=xdata&xk=mods
-        var $win = $(window),
-            util = {
-                heredoc : function(fn){return (fn.toString().split('\n').slice(1,-1).join('\n') + '\n');},
-                toHtml:function(tpl,obj,ext){tpl = Hogan.compile(tpl);return (tpl.render(obj,ext));}
-            },
-            modDataProvider = {
-            url:'http://log.oxox.io/api.php',
-            rock:function(_params,cbk,postData){
-				_params = $.extend({
-					"xn":"xdata",
-					"xk":"mods_"+(window['yPageId']||'1000')
-				},_params||{});
-				var url = this.url+'?'+$.param(_params,true);
-                var xhr = $.ajax({
-                    url:url,
-                    dataType:'json',
-                    data:JSON.stringify(postData),
-                    type:postData?'POST':'GET'
-                });
-                xhr.done(function(d,txtStatus,jqXhr){
-                    cbk(null,d);
-                }).fail(function(jqXhr,txtStatus,err){
-                    cbk(err);
-                });
-            },
-            init:function(){
-                this.rock({
-                    act:'query'
-                },function(err,msg){
-                    if(err){
-                        tip.show('Server Error:'+err,null,true);
-                        return;
-                    }
-                    var noRecords = msg.code=='0';
-                
-                    if (noRecords){
-                        //初始化数据
-                        tip.show('初始化数据...',null,false);
-                        modDataProvider.initData();
-                        return;
-                    }
-
-                    if(msg.code!=='1'){
-                        tip.show(msg.info,null,true);
-                        return;
-                    }
-
-                    //初始化树形菜单
-                    modDataProvider.setData(msg.info.xv);
-                    $win.trigger('onTreeDataReady',[msg.info.xv]);
-                });
-            },
-            initData:function(){
-                this.rock({
-                    act:'add'
-                },function(err,msg){
-                    if(err){
-                        tip.show('Server Error:'+err,null,true);
-                        return;
-                    }
-                    if(msg.code=='0'){
-                        tip.show(msg.info,null,true);
-                        return;
-                    }
-                    modDataProvider.setData(modDataProvider.dummyData);
-                    $win.trigger('onTreeDataReady',[modDataProvider.dummyData,true]);
-                },modDataProvider.dummyData);
-            },
-            update:function(data,cbk){
-                tip.show('更新数据...',null,false);
-                this.rock({
-                    act:'update'
-                },function(err,msg){
-                    cbk(err,msg);
-                    if(err){
-                        tip.show('Server Error:'+err,null,true);
-                        return;
-                    }
-                    if(msg.code=='0'){
-                        tip.show(msg.info,null,true);
-                        return;
-                    }
-                    tip.hide();
-                },data);
-            },
-            setData:function(data){
-                this.data = data;
-                this.dataStr = JSON.stringify(data);
-            },
-            getData:function(fromDataStr){
-                if (fromDataStr) {
-                    return JSON.parse(this.dataStr);
-                };
-                return this.data;
-            },
-            _getItemById:function(items,id,cbk){
-                var len = items.length,
-                    item = null,
-                    found=false;
-                for(var i = 0 ;i<len;i++){
-                    item = items[i];
-                    if(item.id==id){
-                        found = true;
-                        cbk&&cbk(i,items);
-                        break;
-                    };
-                    if (!item.babies) {
-                        continue;
-                    };
-                    item = this._getItemById(item.babies,id,cbk);
-                    if(!item){
-                        continue;
-                    };
-                    found=true;
-                    break;
-                };
-                return (found?item:null);
-            },
-            getItemById:function(id){
-                return this._getItemById(this.data,id);
-            },
-            deleteItemById:function(id,cbk){
-                this._getItemById(this.data,id,function(idx,subs){
-                    subs.splice(idx,1);
-                    //存数据库
-                    modDataProvider.update(modDataProvider.data,cbk);
-                });
-            }
-        };
-
-        modDataProvider.dummyData = [
-        {
-            "id":"ic_toolbar",                            //模块id，必须唯一，建议和css类名关联
-            "alias": "Toolbar头部工具条",                 //模块名称
-            "type": 1,                                    //ytag选择器的类型：1为css选择器，2为多个ytagid以|分隔
-            "ytagSelector": ".ic_toolbar",                //ytag选择器的值
-            "readonly":true,
-            "isCustomYTag":true,
-            "babies":[
-                {
-                    "id":"mod_entry",
-                    "alias": "Toolbar-左侧入口",
-                    "type": 1,
-                    "ytagSelector": ".mod_entry",
-                    "readonly":true,
-                    "isCustomYTag":true,
-                    "babies":[
-                        {
-                            "id":"lnk_qqwangou",
-                            "alias": "QQ网购链接",
-                            "type": 2,
-                            "ytagSelector": "00101",
-                            "readonly":true,
-                            "isCustomYTag":true
-                        },
-                        {
-                            "id":"lnk_paipai",
-                            "alias": "拍拍链接",
-                            "type": 2,
-                            "ytagSelector": "00102",
-                            "readonly":true,
-                            "isCustomYTag":true
-                        }
-                    ]
-                },
-                {
-                    "id":"mod_sitemap",
-                    "alias": "Toolbar-右侧入口",
-                    "type": 1,
-                    "ytagSelector": ".mod_sitemap",
-                    "readonly":true,
-                    "isCustomYTag":true
-                }
-            ]
-        },
-        {
-            "id":"mod_logo",
-            "alias": "网站LOGO",
-            "type": 1,
-            "ytagSelector": ".mod_logo",
-            "readonly":true,
-            "isCustomYTag":true
-        }];
-        //加载提示
-        var tip = {
-            $d:$('#tip'),
-            timer:null,
-            clDanger:'label-danger',
-            show:function(txt,duration,isDanger){
-                clearTimeout(this.timer);
-                this.$d.removeClass('hide').html(txt);
-                if(isDanger){
-                    this.$d.addClass(this.clDanger);
-                }else{
-                    this.$d.removeClass(this.clDanger);
-                };
-                if (duration) {
-                    this.timer = setTimeout(function(){
-                        loader.hide();
-                    },duration);
-                };
-            },
-            hide:function(){
-                this.$d.addClass('hide');
-            }
-        };
-
-        //树形菜单模块
-        var tree = {
-            selectedNode:null,
-            tpl:util.heredoc(function(){/*
-            <ul id="modList{{pid}}" class="mod_list">
-                {{#babies}}
-                <li id="mod{{id}}" class="mod_item{{cl1}}" data-id="{{id}}">
-                    {{#hasChildren}}
-                        <a id="modLnk{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="mod_lk">{{alias}}</a>
-                        {{>children}}
-                    {{/hasChildren}}
-                    {{^hasChildren}}
-                    <a id="modLnk{{id}}" href="javascript:;" data-ytag="{{ytagSelector}}" class="mod_lk">{{alias}}</a>
-                    {{/hasChildren}}
-                </li>
-                {{/babies}}
-            </ul>
-            */}),
-            init:function(){
-                $win.on('onTreeDataReady',function(e,d,first){
-                    tip.show('初始化树形菜单...',null,false);
-                    tree.render(d);
-                });
-            },
-            render:function(d){
-                d = {
-                    id:'0',
-                    babies:d,
-                    isCustomYTag:true
-                };
-                this.parseTreeData(d,'-1');
-                var html = util.toHtml(this.tpl,d,{children:this.tpl}),
-					id1 = d.hasChildren?d.babies[0].id:null;
-					
-				this.$tree = $('#modTree').html(html).jstree({
-					"core" : { "multiple":false },
-                    "plugins" : [ "themes", "html_data","ui" , "crrm"]
-                }).bind("select_node.jstree", function (e, data) {
-                    tree.selectedNode = data.selected;
-                    var selectedItem = modDataProvider.getItemById(data.selected.data('id'));
-                    if(!selectedItem){
-                        return;
-                    }
-                    editor.show(data.selected.find('>a'),selectedItem);
-                });
-				if(id1){
-					this.$tree.jstree('open_node', '#mod'+id1);
-				}
-                tip.hide();
-                //console.log(d);
-            },
-            parseTreeData:function(ctag,pid){
-                ctag.pid = pid;
-                ctag = this.parseSingleItem(ctag);
-                if ( (!ctag.babies) || (ctag.babies.length===0) ) {
-                    return ctag;
-                };
-                var len = ctag.babies.length;
-                for(var i =0;i<len;i++){
-                    this.parseTreeData(ctag.babies[i],ctag.id);
-                };//for
-                return ctag;
-            },
-            parseSingleItem:function(tempItem){
-                tempItem.id = tempItem.isCustomYTag?tempItem.id:tempItem.ytagSelector;
-                tempItem.cl1="";
-                tempItem.hasChildren = false;
-                if(tempItem.readonly){
-                    tempItem.cl1=' mod_item1';
-                }
-                //含子级模块
-                if(tempItem.babies&&tempItem.babies.length>0){
-                    tempItem.cl1+=' mod_item2';
-                    tempItem.hasChildren = true;
-                }
-                return tempItem;
-            },
-            addNode:function(pos,meta,callback,skip_rename){
-                this.$tree.jstree("create",this.selectedNode,pos,meta,callback,skip_rename);
-            },
-            removeNode:function(){
-                this.$tree.jstree("delete_node",this.selectedNode);
-            }
-        };
-
-        //编辑器模块
-        var editor = {
-            clNewRecord:'mod_editor1',
-            prevData:null,
-            data:null,
-            isAdding:false,
-            init:function(){
-                this.$d = $('#editor');
-                this.$inputs = this.$d.find('input[type="text"]');
-                this.$rowType = $('#formRowType');
-                this.$d.find('.close').on('click',function(e){
-                    editor.hide();
-                });
-                this.$btnAdd = $('#btnAdd').on('click',function(e){
-                    editor.show(editor.$btnAdd,null);
-                });
-
-                $('#btnSave').on('click',function(e){
-                    editor.save();
-                });
-                $('#btnDelete').on('click',function(e){
-                    editor.delete();
-                });
-            },
-            save:function(){
-                return;
-                var d = this.getValue();
-                d.isCustomYTag = true;
-                d.type=1;
-                if(this.data){
-                    d.id=this.data.id;
-                };
-                //validation
-
-                if(d.alias.length==0||d.ytagSelector.length==0){
-                    tip.show('模块名称和ytag选择器均不能为空！',3000,true);
-                    return false;
-                };
-                var $tempDom = null;
-                //获取关联的ytag
-                if(d.ytagSelector.indexOf('.')!=-1 || d.ytagSelector.indexOf('#')!=-1){
-                    //css选择器
-                    $tempDom = $(d.ytagSelector);
-                    if($tempDom.length===0){
-                        this.showTip('ytag选择器必须是有效的css选择器，或则是以|分隔的有效的ytag id！',3000);
-                        return false;
-                    };
-                    J.data.saveCTag(d);
-                    return true;
-                };
-                //ytag id，|分隔
-                if( d.ytagSelector.indexOf('|')==-1 && (!/^[0-9]+$/.test(d.ytagSelector)) ){
-                    this.showTip('ytag选择器必须是有效的css选择器，或则是以|分隔的有效的ytag id！',3000);
-                    return false;
-                };
-                var tags = d.ytagSelector.split('|'),
-                    isValid = true,
-                    len = tags.length;
-                for(var i =0;i<len;i++){
-                    if(!(/^[0-9]+$/.test(tags[i])) ){
-                        isValid=false;
-                        break;
-                    }
-                };//for
-                if(!isValid){
-                    this.showTip('ytag选择器必须是有效的css选择器，或则是以|分隔的有效的ytag id！',3000);
-                    return false;
-                };
-                d.type=2;
-                J.data.saveCTag(d);
-            },
-            delete:function(){
-                if(!this.data){
-                    this.hide();
-                    return;
-                };
-                modDataProvider.deleteItemById(this.data.id,function(err,msg){
-                    if(err||msg.code=='0'){
-                        return;
-                    };
-                    //删除成功
-                    tree.removeNode();
-                    editor.hide();
-                });
-            },
-            show:function($t,data){
-                var offset = $t.offset(),
-                    w = $t.outerWidth();
-
-                this.reset();
-                this.$d.css({
-                    left:(offset.left+w+10),
-                    top:(offset.top-10),
-                }).addClass('in');
-                this.data = data;
-                this.isAdding = (data===null);
-                if(data){
-                    this.prevData = data;
-                    this.$inputs.each(function(i,o){
-                        o.value = data[o.name];
-                    });
-                }else{
-                    this.$d.addClass(this.clNewRecord);
-                    if(this.prevData){
-                        this.$rowType.removeClass('hide');
-                    }else{
-                        this.$rowType.addClass('hide');
-                    };
-                };
-            },
-            hide:function(){
-                this.$d.removeClass('in');
-                this.reset();
-            },
-            reset:function(){
-                this.$inputs.val('');
-                this.$d.removeClass(this.clNewRecord);
-            },
-            getValue:function(){
-                var d={};
-                this.$inputs.each(function(i,o){
-                    d[o.name]=$.trim(o.value);
-                });
-                return d;
-            }
-        };
-
-        $(function(){
-        
-            modDataProvider.init();
-            tree.init();
-            editor.init();
-        });
-    </script>
+        <!--I will compress the staffs bellow when i am being happy!!-->
+        <script src="http://oxox.io/assets/js/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="http://oxox.io/assets/js/libs/j/1.0.2/j.core.js"></script>
+        <script src="assets/jstree/jstree.js"></script>
+        <script src="assets/js/app.pages.js"></script>
+        <script src="assets/js/app.util.js"></script>
+        <script src="assets/js/app.repo.js"></script>
+        <script src="assets/js/app.tip.js"></script>
+        <script src="assets/js/app.tree.js"></script>
+        <script src="assets/js/app.editor.js"></script>
+        <script>J.init();</script>
     </body>
 </html>
