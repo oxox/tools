@@ -11,95 +11,145 @@
     </head>
     <body>
         <style type="text/css">
-            body{padding-top: 70px;padding-bottom: 30px;}
-            .page_list{margin-top:20px;}
+            /* Sticky footer styles
+            -------------------------------------------------- */
+            html,body {height: 100%;}
+            /* Wrapper for page content to push down footer */
+            .sticky-wrap {
+              min-height: 100%;
+              height: auto !important;
+              height: 100%;
+              /* Negative indent footer by its height */
+              margin: 0 auto -60px;
+              /* Pad bottom by footer height */
+              padding: 0 0 60px;
+            }
+            /* Set the fixed height of the footer here */
+            .sticky-footer {
+              height: 60px;
+              background-color: #f5f5f5;
+            }
+            /* Custom page CSS
+            -------------------------------------------------- */
+            /* Not required for template or sticky footer method. */
+            .sticky-footer > .container {
+              padding-left: 15px;
+              padding-right: 15px;
+            }
+
+            body{padding-top: 70px;}
             .row_a{margin-top:20px;}
-			.page_switcher{margin-bottom:4px;padding-bottom:4px;border-bottom:1px solid #eee;}
+            .panel_main{position: relative;}
+            .panel_main .panel-body{padding-bottom: 20px;}
+            .site_tip{position: absolute;left:0;bottom:0;}
+            .page_list{margin-top:20px;}
+            .mod_editor{max-width: none;width:400px;}
+            .mod_editor .close{margin-right:4px;margin-top:1px;}
+            .mod_editor.right .arrow{top:8px;margin-top: 0;}
+            .mod_editor.in{display: block;}
+                .editor_form{margin-top: 15px;}
+                .form_row1{display: none;}
+            .mod_editor1 .form_row1{display: block;}
+            .mod_editor1 .btn_del{display: none;}
+            .credit{margin:20px 0;}
         </style>
-        
-        <!-- Fixed navbar -->
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="sticky-wrap">
+            <!-- Fixed navbar -->
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="http://yixun.com">YX Mods Builder</a>
+                    </div>
+                </div>
+            </div>
             <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="http://yixun.com">YX Mods Builder</a>
+                <div class="row row_a">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default panel_main">
+                            <div id="tip" class="label label-default site_tip">Loading...</div>
+                            <div class="panel-heading">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info">首页</button>
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">首页</a></li>
+                                        <li><a href="#">商详</a></li>
+                                        <li><a href="#">搜索</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">发现</a></li>
+                                    </ul>
+                                </div>
+                                <button id="btnAdd" type="button" class="btn btn-default">添加模块</button>
+                            </div>
+                            <div class="panel-body">
+                                <div id="modTree" class="mod_tree">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /container -->
+        </div>
+        <div class="sticky-footer">
+            <div class="container">
+                <div class="credit">
+                    <p>&copy; OXOX.IO 2013 - <script>document.write(new Date().getFullYear()+1)</script></p>
                 </div>
             </div>
         </div>
-        
-        <div class="container">
-            <div class="row row_a">
-                <div class="col-lg-7">
-					<div class="page_switcher">
-						<div class="btn-group">
-							<button type="button" class="btn btn-info">首页</button>
-							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">首页</a></li>
-								<li><a href="#">商详</a></li>
-								<li><a href="#">搜索</a></li>
-								<li class="divider"></li>
-								<li><a href="#">发现</a></li>
-							</ul>
-						</div>
-						<button type="button" class="btn btn-default">添加模块</button>
-					</div>
-                    <div id="loading" class="alert alert-info">Loading...</div>
-                    <div id="modTree" class="mod_tree"></div>
-                </div>
-                <div class="col-lg-5">
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							<label for="iptId" class="col-lg-2 control-label">Id</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="iptId" placeholder="模块编号"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="iptName" class="col-lg-2 control-label">Name</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="iptName" placeholder="模块名称"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="iptYTags" class="col-lg-2 control-label">YTags</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="iptYTags" placeholder="多个ytag以|分隔，或填写css选择器"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-offset-2 col-lg-10">
-								<button type="submit" class="btn btn-default">保存</button>
-								<button class="btn btn-default">删除</button>
-							</div>
-						</div>
-					</form>
+        <div id="editor" class="popover fade right mod_editor">
+            <button type="button" class="close" aria-hidden="true">&times;</button>
+            <div class="arrow"></div>
+            <div class="popover-content">
+                <div class="form-horizontal editor_form" role="form">
+                    <div class="form-group">
+                        <label for="iptName" class="col-lg-2 control-label">Name</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="alias" class="form-control" id="iptName" placeholder="模块名称"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="iptYTags" class="col-lg-2 control-label">YTags</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="ytagSelector" class="form-control" id="iptYTags" placeholder="多个ytag以|分隔，或填写css选择器"/>
+                        </div>
+                    </div>
+                    <div id="formRowType" class="form-group form_row1 hide">
+                        <label for="iptType" class="col-lg-2 control-label">Type</label>
+                        <div class="col-lg-10">
+                            <select id="iptType" class="form-control">
+                                <option>子模块</option>
+                                <option>同级模块-靠前</option>
+                                <option>同级模块-靠后</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button id="btnSave" class="btn btn-default btn_save">保存</button>
+                            <button id="btnDelete" class="btn btn-default btn_del">删除</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="footer">
-                <p>&copy; OXOX.IO 2013 - <script>document.write(new Date().getFullYear()+1)</script></p>
-            </div>
-
-        </div> <!-- /container -->
-
+        </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://oxox.io/assets/js/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
-    <script src="assets/jstree/jstree.min.js"></script>
+    <script src="assets/jstree/jstree.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script>
-        //http://hua-mo.com/xlog/api.php?act=query&callback=asdfasdfasfasdf&xn=xdata&xk=mods
+        //http://log.oxox.io/api.php?act=query&callback=asdfasdfasfasdf&xn=xdata&xk=mods
         var $win = $(window),
             util = {
                 heredoc : function(fn){return (fn.toString().split('\n').slice(1,-1).join('\n') + '\n');},
                 toHtml:function(tpl,obj,ext){tpl = Hogan.compile(tpl);return (tpl.render(obj,ext));}
             },
             modDataProvider = {
-            url:'http://hua-mo.com/xlog/api.php',
+            url:'http://log.oxox.io/api.php',
             rock:function(_params,cbk,postData){
 				_params = $.extend({
 					"xn":"xdata",
@@ -123,24 +173,25 @@
                     act:'query'
                 },function(err,msg){
                     if(err){
-                        $loading.html('Server Error:'+err).addClass('alert-danger');
+                        tip.show('Server Error:'+err,null,true);
                         return;
                     }
                     var noRecords = msg.code=='0';
                 
                     if (noRecords){
                         //初始化数据
-                        $loading.html('初始化数据...');
+                        tip.show('初始化数据...',null,false);
                         modDataProvider.initData();
                         return;
                     }
 
                     if(msg.code!=='1'){
-                        $loading.html(msg.info).addClass('alert-danger');
+                        tip.show(msg.info,null,true);
                         return;
                     }
 
                     //初始化树形菜单
+                    modDataProvider.setData(msg.info.xv);
                     $win.trigger('onTreeDataReady',[msg.info.xv]);
                 });
             },
@@ -149,15 +200,76 @@
                     act:'add'
                 },function(err,msg){
                     if(err){
-                        $loading.html('Server Error:'+err).addClass('alert-danger');
+                        tip.show('Server Error:'+err,null,true);
                         return;
                     }
                     if(msg.code=='0'){
-                        $loading.html(msg.info).addClass('alert-danger');
+                        tip.show(msg.info,null,true);
                         return;
                     }
+                    modDataProvider.setData(modDataProvider.dummyData);
                     $win.trigger('onTreeDataReady',[modDataProvider.dummyData,true]);
                 },modDataProvider.dummyData);
+            },
+            update:function(data,cbk){
+                tip.show('更新数据...',null,false);
+                this.rock({
+                    act:'update'
+                },function(err,msg){
+                    cbk(err,msg);
+                    if(err){
+                        tip.show('Server Error:'+err,null,true);
+                        return;
+                    }
+                    if(msg.code=='0'){
+                        tip.show(msg.info,null,true);
+                        return;
+                    }
+                    tip.hide();
+                },data);
+            },
+            setData:function(data){
+                this.data = data;
+                this.dataStr = JSON.stringify(data);
+            },
+            getData:function(fromDataStr){
+                if (fromDataStr) {
+                    return JSON.parse(this.dataStr);
+                };
+                return this.data;
+            },
+            _getItemById:function(items,id,cbk){
+                var len = items.length,
+                    item = null,
+                    found=false;
+                for(var i = 0 ;i<len;i++){
+                    item = items[i];
+                    if(item.id==id){
+                        found = true;
+                        cbk&&cbk(i,items);
+                        break;
+                    };
+                    if (!item.babies) {
+                        continue;
+                    };
+                    item = this._getItemById(item.babies,id,cbk);
+                    if(!item){
+                        continue;
+                    };
+                    found=true;
+                    break;
+                };
+                return (found?item:null);
+            },
+            getItemById:function(id){
+                return this._getItemById(this.data,id);
+            },
+            deleteItemById:function(id,cbk){
+                this._getItemById(this.data,id,function(idx,subs){
+                    subs.splice(idx,1);
+                    //存数据库
+                    modDataProvider.update(modDataProvider.data,cbk);
+                });
             }
         };
 
@@ -214,11 +326,33 @@
             "readonly":true,
             "isCustomYTag":true
         }];
+        //加载提示
+        var tip = {
+            $d:$('#tip'),
+            timer:null,
+            clDanger:'label-danger',
+            show:function(txt,duration,isDanger){
+                clearTimeout(this.timer);
+                this.$d.removeClass('hide').html(txt);
+                if(isDanger){
+                    this.$d.addClass(this.clDanger);
+                }else{
+                    this.$d.removeClass(this.clDanger);
+                };
+                if (duration) {
+                    this.timer = setTimeout(function(){
+                        loader.hide();
+                    },duration);
+                };
+            },
+            hide:function(){
+                this.$d.addClass('hide');
+            }
+        };
 
-        var $loading = $('#loading');
-
-        //树形菜单
+        //树形菜单模块
         var tree = {
+            selectedNode:null,
             tpl:util.heredoc(function(){/*
             <ul id="modList{{pid}}" class="mod_list">
                 {{#babies}}
@@ -236,7 +370,7 @@
             */}),
             init:function(){
                 $win.on('onTreeDataReady',function(e,d,first){
-                    $loading.html('初始化树形菜单....').removeClass('alert-danger');
+                    tip.show('初始化树形菜单...',null,false);
                     tree.render(d);
                 });
             },
@@ -252,14 +386,20 @@
 					
 				this.$tree = $('#modTree').html(html).jstree({
 					"core" : { "multiple":false },
-                    "plugins" : [ "themes", "html_data","ui" ]
+                    "plugins" : [ "themes", "html_data","ui" , "crrm"]
+                }).bind("select_node.jstree", function (e, data) {
+                    tree.selectedNode = data.selected;
+                    var selectedItem = modDataProvider.getItemById(data.selected.data('id'));
+                    if(!selectedItem){
+                        return;
+                    }
+                    editor.show(data.selected.find('>a'),selectedItem);
                 });
 				if(id1){
 					this.$tree.jstree('open_node', '#mod'+id1);
 				}
-                $loading.hide();
+                tip.hide();
                 //console.log(d);
-                
             },
             parseTreeData:function(ctag,pid){
                 ctag.pid = pid;
@@ -286,6 +426,139 @@
                     tempItem.hasChildren = true;
                 }
                 return tempItem;
+            },
+            addNode:function(pos,meta,callback,skip_rename){
+                this.$tree.jstree("create",this.selectedNode,pos,meta,callback,skip_rename);
+            },
+            removeNode:function(){
+                this.$tree.jstree("delete_node",this.selectedNode);
+            }
+        };
+
+        //编辑器模块
+        var editor = {
+            clNewRecord:'mod_editor1',
+            prevData:null,
+            data:null,
+            isAdding:false,
+            init:function(){
+                this.$d = $('#editor');
+                this.$inputs = this.$d.find('input[type="text"]');
+                this.$rowType = $('#formRowType');
+                this.$d.find('.close').on('click',function(e){
+                    editor.hide();
+                });
+                this.$btnAdd = $('#btnAdd').on('click',function(e){
+                    editor.show(editor.$btnAdd,null);
+                });
+
+                $('#btnSave').on('click',function(e){
+                    editor.save();
+                });
+                $('#btnDelete').on('click',function(e){
+                    editor.delete();
+                });
+            },
+            save:function(){
+                return;
+                var d = this.getValue();
+                d.isCustomYTag = true;
+                d.type=1;
+                if(this.data){
+                    d.id=this.data.id;
+                };
+                //validation
+
+                if(d.alias.length==0||d.ytagSelector.length==0){
+                    tip.show('模块名称和ytag选择器均不能为空！',3000,true);
+                    return false;
+                };
+                var $tempDom = null;
+                //获取关联的ytag
+                if(d.ytagSelector.indexOf('.')!=-1 || d.ytagSelector.indexOf('#')!=-1){
+                    //css选择器
+                    $tempDom = $(d.ytagSelector);
+                    if($tempDom.length===0){
+                        this.showTip('ytag选择器必须是有效的css选择器，或则是以|分隔的有效的ytag id！',3000);
+                        return false;
+                    };
+                    J.data.saveCTag(d);
+                    return true;
+                };
+                //ytag id，|分隔
+                if( d.ytagSelector.indexOf('|')==-1 && (!/^[0-9]+$/.test(d.ytagSelector)) ){
+                    this.showTip('ytag选择器必须是有效的css选择器，或则是以|分隔的有效的ytag id！',3000);
+                    return false;
+                };
+                var tags = d.ytagSelector.split('|'),
+                    isValid = true,
+                    len = tags.length;
+                for(var i =0;i<len;i++){
+                    if(!(/^[0-9]+$/.test(tags[i])) ){
+                        isValid=false;
+                        break;
+                    }
+                };//for
+                if(!isValid){
+                    this.showTip('ytag选择器必须是有效的css选择器，或则是以|分隔的有效的ytag id！',3000);
+                    return false;
+                };
+                d.type=2;
+                J.data.saveCTag(d);
+            },
+            delete:function(){
+                if(!this.data){
+                    this.hide();
+                    return;
+                };
+                modDataProvider.deleteItemById(this.data.id,function(err,msg){
+                    if(err||msg.code=='0'){
+                        return;
+                    };
+                    //删除成功
+                    tree.removeNode();
+                    editor.hide();
+                });
+            },
+            show:function($t,data){
+                var offset = $t.offset(),
+                    w = $t.outerWidth();
+
+                this.reset();
+                this.$d.css({
+                    left:(offset.left+w+10),
+                    top:(offset.top-10),
+                }).addClass('in');
+                this.data = data;
+                this.isAdding = (data===null);
+                if(data){
+                    this.prevData = data;
+                    this.$inputs.each(function(i,o){
+                        o.value = data[o.name];
+                    });
+                }else{
+                    this.$d.addClass(this.clNewRecord);
+                    if(this.prevData){
+                        this.$rowType.removeClass('hide');
+                    }else{
+                        this.$rowType.addClass('hide');
+                    };
+                };
+            },
+            hide:function(){
+                this.$d.removeClass('in');
+                this.reset();
+            },
+            reset:function(){
+                this.$inputs.val('');
+                this.$d.removeClass(this.clNewRecord);
+            },
+            getValue:function(){
+                var d={};
+                this.$inputs.each(function(i,o){
+                    d[o.name]=$.trim(o.value);
+                });
+                return d;
             }
         };
 
@@ -293,6 +566,7 @@
         
             modDataProvider.init();
             tree.init();
+            editor.init();
         });
     </script>
     </body>
