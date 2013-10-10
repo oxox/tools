@@ -17,7 +17,7 @@ J(function($,p,pub){
             xhr.done(function(d,txtStatus,jqXhr){
                 cbk(null,d);
             }).fail(function(jqXhr,txtStatus,err){
-                cbk(err);
+                cbk(err+txtStatus);
             });
         },
         initData:function(){
