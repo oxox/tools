@@ -1,0 +1,5 @@
+[
+    {"id":1,"name":"首页","url":"yixun.com","ypageid":"1000"},
+    {"id":2,"name":"搜索页","url":"seachex.yixun.com"},
+    {"id":3,"name":"商详页","url":"item.yixun.com"}
+]
