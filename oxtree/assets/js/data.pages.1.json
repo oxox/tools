@@ -1,1 +1,1 @@
-{"id":1,"name":"首页","url":"yixun.com","ypageid":"1000"}
+{"id":1,"name":"首页","url":"(\\w+):\\/\\/(www\\.)?yixun\\.com\\/$"}

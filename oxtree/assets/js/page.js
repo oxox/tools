@@ -7,8 +7,8 @@ angular.module('page', ['pageServices']).
       otherwise({redirectTo:'/'});
   });
  
-function ListCtrl($scope, $http,Page) {
-  $scope.pages = Page.query();
+function ListCtrl($scope, $http,RepoPage) {
+  $scope.pages = RepoPage.query();
 }
  
 function CreateCtrl($scope, $location, $timeout, Projects) {
@@ -19,9 +19,8 @@ function CreateCtrl($scope, $location, $timeout, Projects) {
   }
 }
  
-function EditCtrl($scope, $location, $routeParams,Page) {
-  $scope.page = Page.get({pageId:$routeParams.pageId},function(page){
-    console.log(page);
+function EditCtrl($scope, $location, $routeParams,RepoPage) {
+  $scope.page = RepoPage.get($routeParams,function(page){
     $scope.page0 = angular.copy(page);
   });
 
@@ -35,7 +34,14 @@ function EditCtrl($scope, $location, $routeParams,Page) {
   };
 
   $scope.save = function() {
-    $scope.page.$save();
+    console.log($scope);
+    $scope.page.$save(function(res){
+      //ok callback
+    },function(res){
+      //error callback
+      console.log('res',res);
+      console.log('arguments',arguments);
+    });
   };
 
   /*
