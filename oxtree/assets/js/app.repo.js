@@ -1,6 +1,7 @@
 J(function($,p,pub){
     pub.id="repo";
     p.provider = {
+        isAuthenticated:false,
         url:'http://log.oxox.io/api.php',
         rock:function(_params,cbk,postData){
             _params = $.extend({
@@ -89,7 +90,13 @@ J(function($,p,pub){
             };
             return (found?item:null);
         },
-        _onLoad:function(){
+        _init:function(){
+            J.util.$win.bind(J.auth.EVT.done,function(e,d){
+                p.provider.isAuthenticated=true;
+                p.provider.bootup();
+            });
+        },
+        bootup:function(){
             J.util.$win.trigger(pub.EVT.init);
             this.rock({
                 act:'query'
