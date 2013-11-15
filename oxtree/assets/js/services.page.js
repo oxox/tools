@@ -1,6 +1,7 @@
 angular.module('pageServices',['ngResource'])
     .factory('RepoPage',['$resource',function($resource){
-        return $resource('assets/js/data.pages.:pageId.json', {pageId:'@id'}, {
-          query: {method:'GET', params:{pageId:'all'}, isArray:true}
+        var url = 'http://log.oxox.io/api.php?xn=xdata&xk=page&act=:actId';
+        return $resource(url, {actId:'@act'}, {
+          query: {method:'GET', params:{actId:'query'}, isArray:false}
         });
     }]);
