@@ -108,7 +108,7 @@ J(function($,p,pub){
             this.reset();
             this.$d.css({
                 left:(offset.left+w+10),
-                top:(offset.top-10),
+                top:(offset.top-10)
             }).addClass('in');
             this.data = data;
             this.isAdding = (data===null);

@@ -26,7 +26,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oxtree/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="42" selection-start="5785" selection-end="5798" vertical-scroll-proportion="-16.205883" vertical-offset="1874" max-vertical-offset="3475">
+            <state line="97" column="42" selection-start="5785" selection-end="5798" vertical-scroll-proportion="-16.941177" vertical-offset="1849" max-vertical-offset="3450">
               <folding />
             </state>
           </provider>
@@ -35,10 +35,10 @@
       <file leaf-file-name="jstree.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oxtree/assets/jstree/jstree.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="236" column="54" selection-start="5752" selection-end="5752" vertical-scroll-proportion="0.0" vertical-offset="4575" max-vertical-offset="124475">
+            <state line="236" column="54" selection-start="5752" selection-end="5752" vertical-scroll-proportion="0.0" vertical-offset="4525" max-vertical-offset="121375">
               <folding>
-                <marker date="1384505652077" expanded="false" signature="92748:92761" placeholder="..." />
-                <marker date="1384505652077" expanded="false" signature="136034:136060" placeholder="..." />
+                <marker date="1384508024426" expanded="false" signature="92748:92761" placeholder="..." />
+                <marker date="1384508024426" expanded="false" signature="136034:136060" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -47,16 +47,36 @@
       <file leaf-file-name="app.editor.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.editor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="14" selection-start="4222" selection-end="4222" vertical-scroll-proportion="-26.333334" vertical-offset="2714" max-vertical-offset="5650">
+            <state line="109" column="40" selection-start="3276" selection-end="3276" vertical-scroll-proportion="-10.592592" vertical-offset="2439" max-vertical-offset="5650">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.auth.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/oxtree/assets/jstree/themes/default/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="53" selection-start="4395" selection-end="4396" vertical-scroll-proportion="0.6784566" vertical-offset="1117" max-vertical-offset="2050">
+              <folding>
+                <element signature="e#2865#3130#2" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.pages.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.pages.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="900">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.auth.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.auth.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="30" selection-start="129" selection-end="129" vertical-scroll-proportion="0.13020833" vertical-offset="0" max-vertical-offset="1775">
+            <state line="25" column="20" selection-start="708" selection-end="708" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1775">
               <folding />
             </state>
           </provider>
@@ -65,7 +85,7 @@
       <file leaf-file-name="app.tree.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.tree.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="46" selection-start="1549" selection-end="1549" vertical-scroll-proportion="0.0" vertical-offset="705" max-vertical-offset="2875">
+            <state line="39" column="39" selection-start="1420" selection-end="1426" vertical-scroll-proportion="0.0" vertical-offset="1230" max-vertical-offset="2875">
               <folding />
             </state>
           </provider>
@@ -89,6 +109,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="app.tip.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.tip.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1300">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -102,8 +131,10 @@
         <option value="$PROJECT_DIR$/oxtree/assets/jstree/jstree.js" />
         <option value="$PROJECT_DIR$/oxtree/assets/js/app.tree.js" />
         <option value="$PROJECT_DIR$/oxtree/index.html" />
-        <option value="$PROJECT_DIR$/oxtree/assets/js/app.editor.js" />
         <option value="$PROJECT_DIR$/oxtree/assets/js/app.auth.js" />
+        <option value="$PROJECT_DIR$/oxtree/assets/js/app.editor.js" />
+        <option value="$PROJECT_DIR$/oxtree/assets/css/style.css" />
+        <option value="$PROJECT_DIR$/oxtree/assets/jstree/themes/default/style.css" />
       </list>
     </option>
   </component>
@@ -284,6 +315,10 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -372,9 +407,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.tree.js">
+    <entry file="file://$PROJECT_DIR$/oxtree/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="46" selection-start="1549" selection-end="1549" vertical-scroll-proportion="0.0" vertical-offset="705" max-vertical-offset="2875">
+        <state line="97" column="42" selection-start="5785" selection-end="5798" vertical-scroll-proportion="-16.941177" vertical-offset="1849" max-vertical-offset="3450">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/jstree/jstree.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="236" column="54" selection-start="5752" selection-end="5752" vertical-scroll-proportion="0.0" vertical-offset="4575" max-vertical-offset="124475">
+          <folding>
+            <marker date="1384508024426" expanded="false" signature="92748:92761" placeholder="..." />
+            <marker date="1384508024426" expanded="false" signature="136034:136060" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="20" selection-start="708" selection-end="708" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1775">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.editor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="109" column="40" selection-start="3276" selection-end="3276" vertical-scroll-proportion="-10.592592" vertical-offset="2439" max-vertical-offset="5650">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="0" selection-start="1231" selection-end="1231" vertical-scroll-proportion="0.0" vertical-offset="140" max-vertical-offset="1175">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.pages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="960">
           <folding />
         </state>
       </provider>
@@ -386,34 +459,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oxtree/index.html">
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.tip.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="42" selection-start="5785" selection-end="5798" vertical-scroll-proportion="-16.205883" vertical-offset="1874" max-vertical-offset="3475">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1300">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oxtree/assets/jstree/jstree.js">
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.tree.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="236" column="54" selection-start="5752" selection-end="5752" vertical-scroll-proportion="0.0" vertical-offset="4575" max-vertical-offset="124475">
+        <state line="39" column="39" selection-start="1420" selection-end="1426" vertical-scroll-proportion="0.0" vertical-offset="1230" max-vertical-offset="2875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oxtree/assets/jstree/themes/default/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="53" selection-start="4395" selection-end="4396" vertical-scroll-proportion="0.6784566" vertical-offset="1117" max-vertical-offset="2050">
           <folding>
-            <marker date="1384505652077" expanded="false" signature="92748:92761" placeholder="..." />
-            <marker date="1384505652077" expanded="false" signature="136034:136060" placeholder="..." />
+            <element signature="e#2865#3130#2" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="14" selection-start="4222" selection-end="4222" vertical-scroll-proportion="-26.333334" vertical-offset="2714" max-vertical-offset="5650">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oxtree/assets/js/app.auth.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="30" selection-start="129" selection-end="129" vertical-scroll-proportion="0.13020833" vertical-offset="0" max-vertical-offset="1775">
-          <folding />
         </state>
       </provider>
     </entry>
