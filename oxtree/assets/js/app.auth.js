@@ -2,9 +2,18 @@ J(function($,p,pub){
     pub.id="auth";
     pub.isOk = false;
     var key = "oxtree.github.user";
+
+    p.adminUserIds = ['1908773','4724784'];
+    p.userId = 0;
+    //判断是否是管理员
+    pub.checkIdAdmin = function(){
+        var admin = $.inArray(p.userId, p.adminUserIds);
+        return admin;
+    };
+
     p.user={
         _init:function(){
-
+            //debugger;
             J.util.$win.bind(pub.EVT.error,function(e,d){
                 p.user.showError(d);
                 window.localStorage.removeItem(key);
@@ -16,17 +25,19 @@ J(function($,p,pub){
             var uid = localStorage[key];
             if(uid){
                 J.util.$win.trigger(pub.EVT.done,[{id:uid}]);
+                p.userId = uid;
                 return;
             }
 
             uid=window.prompt('Input your Github Username:');
             uid = $.trim(uid);
-
+            p.userId = uid;
             if(!uid){
                 J.util.$win.trigger(pub.EVT.error,['Web need your Github Username!']);
                 return;
             }
             var user = new Gh3.User(uid);
+
             user.fetch(function (err, resUser){
 
                 if(err) {

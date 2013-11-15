@@ -233,6 +233,7 @@
 		 *
 		 */
 		init : function (el, options) {
+            //debugger;
 			this.element = $(el).addClass('jstree jstree-' + this._id);
 			this.settings = options;
 			this.element.bind("destroyed", $.proxy(this.teardown, this));

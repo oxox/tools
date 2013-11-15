@@ -7,7 +7,7 @@ J(function($,p,pub){
         tpl:J.util.heredoc(function(){/*
         <ul id="modList{{pid}}" class="mod_list">
             {{#babies}}
-            <li id="mod{{id}}" class="mod_item{{cl1}}" data-id="{{id}}">
+            <li id="mod{{id}}" class="mod_item{{cl1}}" data-id="{{id}}" data-global="{{isGlobalMod}}">
                 {{#hasChildren}}
                     <a id="modLnk{{id}}" href="javascript:;" class="mod_lk">{{alias}}</a>
                     {{>children}}
