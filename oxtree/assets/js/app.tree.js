@@ -7,7 +7,7 @@ J(function($,p,pub){
         tpl:J.util.heredoc(function(){/*
         <ul id="modList{{pid}}" class="mod_list">
             {{#babies}}
-            <li id="mod{{id}}" class="mod_item{{cl1}}" data-id="{{id}}" data-global="{{isGlobalMod}}">
+            <li id="mod{{id}}" class="mod_item{{cl1}}" data-id="{{id}}">
                 {{#hasChildren}}
                     <a id="modLnk{{id}}" href="javascript:;" class="mod_lk">{{alias}}</a>
                     {{>children}}
@@ -22,6 +22,7 @@ J(function($,p,pub){
         _init:function(){
             J.util.$win.on(J.repo.EVT.inited,function(e,d,first){
                 p.tree.render(d);
+                p.tree.checkIsAdmin();
             });
         },
         render:function(d){
@@ -47,7 +48,7 @@ J(function($,p,pub){
             });
             if(id1){
                 this.$tree.jstree('open_node', '#mod'+id1);
-            }
+            };
         },
         parseTreeData:function(ctag,pid){
             ctag.pid = pid;
@@ -74,6 +75,17 @@ J(function($,p,pub){
                 tempItem.hasChildren = true;
             }
             return tempItem;
+        },
+        /**
+         * 判断是否是公共模块 和 管理员账户
+         */
+        checkIsAdmin:function(){
+            var isAdmin = J.auth.checkIdAdmin(),
+                isAdminPage = $('.dropdown-menu a[rel="'+ J.util.getPageId() +'"]').data('admin');
+            //debugger;
+            if(isAdminPage && isAdmin != 1){
+                $('#btnAdd,#btnSave,#btnDelete').remove();
+            }
         }
     };
     

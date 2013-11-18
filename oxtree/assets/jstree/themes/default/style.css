@@ -67,6 +67,3 @@
 
 .jstree-rtl.jstree-default .jstree-anchor > .jstree-undetermined { background-position:-18px -19px; }
 .jstree-rtl.jstree-default .jstree-anchor > .jstree-undetermined:hover { background-position:-18px -37px; }
-
-/*global*/
-li[data-global="1"] *{ font-weight: 700; color: red;}

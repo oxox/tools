@@ -7,13 +7,15 @@ J(function($,p,pub){
     p.userId = 0;
     //判断是否是管理员
     pub.checkIdAdmin = function(){
-        var admin = $.inArray(p.userId, p.adminUserIds);
-        return admin;
+        var admin = $.inArray(p.userId, p.adminUserIds),
+            isAdmin = false;
+        if(admin !== -1) isAdmin =  true;
+        return isAdmin;
     };
 
     p.user={
         _init:function(){
-            //debugger;
+//            debugger;
             J.util.$win.bind(pub.EVT.error,function(e,d){
                 p.user.showError(d);
                 window.localStorage.removeItem(key);

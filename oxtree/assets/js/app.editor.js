@@ -18,7 +18,6 @@ J(function($,p,pub){
             this.$nodePosType = $('#ddlCreateNodePositionType');
             this.$formGroup1 = $('#formGroup1');
             this.$formGroup2 = $('#formGroup2');
-            this.$isGlobalMod = $('#isGlobalMod');
             this.$d.find('.close').on('click',function(e){
                 p.editor.hide();
             });
@@ -101,10 +100,8 @@ J(function($,p,pub){
         },
         show:function($t,data){
             var offset = $t.offset(),
-                w = $t.outerWidth(),
-                isGlobal = $t.closest('li').data('global'),
-                isAdmin = J.auth.checkIdAdmin();
-//            debugger;
+                w = $t.outerWidth();
+
             this.reset();
             this.$d.css({
                 left:(offset.left+w+10),
@@ -124,24 +121,6 @@ J(function($,p,pub){
                     this.$rowType.addClass('hide');
                 };
             };
-            //hugo add:判断是否是公共模块
-            var $btns = $('#btnDelete,#btnSave'),
-                $formGlobal = $('#formGlobalMod');
-            if(isGlobal){
-                if(isAdmin !== -1){
-                    $btns.show();
-                }else{
-                    $btns.hide();
-                }
-            }else{
-                $btns.show();
-            };
-
-            if(isAdmin !== -1){
-                $formGlobal.show();
-            }else{
-                $formGlobal.hide();
-            }
         },
         hide:function(){
             this.$d.removeClass('in');
@@ -160,7 +139,6 @@ J(function($,p,pub){
             var d={};
             d.alias = $.trim(this.$name[0].value);
             d.ytagSelector = $.trim(this.$val[0].value);
-            d.isGlobalMod = this.$isGlobalMod.val();
             d.isCustomYTag = true;
             d.readonly = true;
             d.type=1;
@@ -212,6 +190,8 @@ J(function($,p,pub){
             d.type=2;
             return d;
         }
+
+
     };
     
     pub.show = function($t,data){
