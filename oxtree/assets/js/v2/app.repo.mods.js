@@ -1,5 +1,5 @@
 J(function($,p,pub){
-    pub.id="repo";
+    pub.id="repoMods";
     p.provider = {
         isAuthenticated:false,
         url:'http://log.oxox.io/api.php',
@@ -94,7 +94,7 @@ J(function($,p,pub){
             return (found?item:null);
         },
         _init:function(){
-            J.util.$win.bind(J.auth.EVT.done,function(e,d){
+            J.util.$win.bind(J.repoPages.EVT.inited,function(e,d){
                 p.provider.isAuthenticated=true;
                 p.provider.bootup();
             });
@@ -182,64 +182,44 @@ J(function($,p,pub){
     };
     
     pub.EVT = {
-        init:'onInitializing.repo',
-        initError:'onInitError.repo',
-        inited:'onInited.repo',
-        updating:'onUpdating.repo',
-        updateError:'onUpdateError.repo',
-        updated:'onUpdated.repo'
+        init:'onModInitializing.repo',
+        initError:'onModInitError.repo',
+        inited:'onModInited.repo',
+        updating:'onModUpdating.repo',
+        updateError:'onModUpdateError.repo',
+        updated:'onModUpdated.repo'
     };
-    pub.dummyData = [
-    {
-        "id":"ic_toolbar",                            //模块id，必须唯一，建议和css类名关联
-        "alias": "Toolbar头部工具条",                 //模块名称
-        "type": 1,                                    //ytag选择器的类型：1为css选择器，2为多个ytagid以|分隔
-        "ytagSelector": ".ic_toolbar",                //ytag选择器的值
-        "readonly":true,
-        "isCustomYTag":true,
-        "babies":[
-            {
-                "id":"mod_entry",
-                "alias": "Toolbar-左侧入口",
-                "type": 1,
-                "ytagSelector": ".mod_entry",
-                "readonly":true,
-                "isCustomYTag":true,
-                "babies":[
-                    {
-                        "id":"lnk_qqwangou",
-                        "alias": "QQ网购链接",
-                        "type": 2,
-                        "ytagSelector": "00101",
-                        "readonly":true,
-                        "isCustomYTag":true
-                    },
-                    {
-                        "id":"lnk_paipai",
-                        "alias": "拍拍链接",
-                        "type": 2,
-                        "ytagSelector": "00102",
-                        "readonly":true,
-                        "isCustomYTag":true
-                    }
-                ]
-            },
-            {
-                "id":"mod_sitemap",
-                "alias": "Toolbar-右侧入口",
-                "type": 1,
-                "ytagSelector": ".mod_sitemap",
-                "readonly":true,
-                "isCustomYTag":true
-            }
-        ]
-    },
-    {
-        "id":"mod_logo",
-        "alias": "网站LOGO",
-        "type": 1,
-        "ytagSelector": ".mod_logo",
-        "readonly":true,
-        "isCustomYTag":true
-    }];
+    pub.dummyData = [];
+
+    pub.initDataFromOldDB = function(){
+        
+        if(!J.auth.checkIdAdmin()){
+            alert('无权限！');
+            return;
+        };
+        
+        var map = {
+            '-J8QqMggbkbbPbmJa4re':'1000',//首页
+            '-J8QtfMOYLzW9o8FkgEh':'6849421',//商详页
+            '-J8QtailE2xEZIGU72WX':'7058932',//搜索页
+            '-J8cuILotcD13EGouT-g':'620',//家电城
+            '-J8cvEUQImMHIu-BBDuX':'610',//发现
+            '-J8cvQ0wKbxt11eRT36B':'630',//逛逛
+            '-J8cvfl1tR-36Y75Jd--':'690',//周边
+            '-J8cz2Qpn7_rKE2jiImK':'-J8cz2Qpn7_rKE2jiImK'//公共模块
+        };
+        var tempData = null;
+        for(var c in map){
+            tempData = JSON.parse(localStorage['xdata_mods_'+map[c]]||'[]');
+            console.log(c,tempData);
+            p.provider.rock({
+                xk:'mods_'+c,
+                act:'update'
+            },function(err,msg){
+                console.log(arguments);
+            },tempData);
+        }
+
+    };
+
 });
