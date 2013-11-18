@@ -3,7 +3,7 @@ J(function($,p,pub){
     pub.isOk = false;
     var key = "oxtree.github.user";
 
-    p.adminUserIds = ['1908773','4724784'];
+    p.adminUserIds = ['1908773','4724784','85879'];
     p.userId = 0;
     //判断是否是管理员
     pub.checkIdAdmin = function(){
@@ -15,7 +15,7 @@ J(function($,p,pub){
 
     p.user={
         _init:function(){
-//            debugger;
+            //debugger;
             J.util.$win.bind(pub.EVT.error,function(e,d){
                 p.user.showError(d);
                 window.localStorage.removeItem(key);

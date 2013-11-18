@@ -47,7 +47,7 @@ J(function($,p,pub){
             
             //更新客户端树形数据
             if(!this.isAdding){
-                J.repo.updateItem(d,function(err,msg){
+                J.repoMods.updateItem(d,function(err,msg){
                     if(err||msg.code=='0'){
                         return;
                     };
@@ -67,7 +67,7 @@ J(function($,p,pub){
                 //选择了父节点
                 pos = this.$nodePosType.val();
             };
-            J.repo.addItem(this.prevData,d,pos,function(err,msg){
+            J.repoMods.addItem(this.prevData,d,pos,function(err,msg){
                 if(err||msg.code=='0'){
                     return;
                 };
@@ -89,7 +89,7 @@ J(function($,p,pub){
                 return;
             };
             
-            J.repo.deleteItemById(this.data.id,function(err,msg){
+            J.repoMods.deleteItemById(this.data.id,function(err,msg){
                 if(err||msg.code=='0'){
                     return;
                 };

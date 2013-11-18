@@ -30,7 +30,7 @@ J(function($,p,pub){
 	};
 	pub.getPageId = function(){
 		var pid = pub.getUrlParam('pid');
-		pid = pid||(window['yPageId']||'1000');
+		pid = pid||'-J8QqMggbkbbPbmJa4re';
 		return pid;
 	};
 });

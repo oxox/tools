@@ -20,12 +20,18 @@ J(function($,p,pub){
         </ul>
         */}),
         _init:function(){
-            J.util.$win.on(J.repo.EVT.inited,function(e,d,first){
+            J.util.$win.on(J.repoMods.EVT.inited,function(e,d,first){
                 p.tree.render(d);
                 p.tree.checkIsAdmin();
             });
         },
         render:function(d){
+
+            if(!d || d.length==0){
+                document.getElementById('modTree').innerHTML = '<div class="alert alert-warning">No Records</div>';
+                return;
+            };
+
             d = {
                 id:'0',
                 babies:d,
@@ -40,7 +46,7 @@ J(function($,p,pub){
                 "plugins" : [ "themes", "html_data","ui" , "crrm"]
             }).bind("select_node.jstree", function (e, data) {
                 p.tree.selectedNode = data.selected;
-                var selectedItem = J.repo.getItemById(data.selected.data('id'));
+                var selectedItem = J.repoMods.getItemById(data.selected.data('id'));
                 if(!selectedItem){
                     return;
                 }
@@ -81,9 +87,9 @@ J(function($,p,pub){
          */
         checkIsAdmin:function(){
             var isAdmin = J.auth.checkIdAdmin(),
-                isAdminPage = $('.dropdown-menu a[rel="'+ J.util.getPageId() +'"]').data('admin');
+                isAdminPage = '-J8cz2Qpn7_rKE2jiImK'==J.util.getPageId();
             //debugger;
-            if(isAdminPage && isAdmin != 1){
+            if(isAdminPage && !isAdmin){
                 $('#btnAdd,#btnSave,#btnDelete').remove();
             }
         }

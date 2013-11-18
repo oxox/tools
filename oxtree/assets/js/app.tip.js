@@ -23,17 +23,17 @@ J(function($,p,pub){
             this.$d.addClass('hide');
         },
         _init:function(){
-            J.util.$win.on(J.repo.EVT.init,function(e){
+            J.util.$win.on(J.repoMods.EVT.init+' '+J.repoPages.EVT.init,function(e){
                 pub.show('准备数据中...',null,false);
-            }).on(J.repo.EVT.initError,function(e,err){
+            }).on(J.repoMods.EVT.initError+' '+J.repoPages.EVT.initError,function(e,err){
                 pub.show('Init Error:'+err,null,true);
-            }).on(J.repo.EVT.inited,function(e){
+            }).on(J.repoMods.EVT.inited+' '+J.repoPages.EVT.inited,function(e){
                 pub.hide();
-            }).on(J.repo.EVT.updating,function(e){
+            }).on(J.repoMods.EVT.updating,function(e){
                 pub.show('保存数据中...',null,false);
-            }).on(J.repo.EVT.updateError,function(e,err){
+            }).on(J.repoMods.EVT.updateError,function(e,err){
                 pub.show('操作失败:'+err,null,true);
-            }).on(J.repo.EVT.updated,function(e){
+            }).on(J.repoMods.EVT.updated,function(e){
                 pub.hide();
             });
         }

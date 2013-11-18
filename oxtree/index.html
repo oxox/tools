@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="xdataApp">
     <head>
         <title>OX Tree Builder</title>
         <meta charset="utf-8" />
@@ -9,6 +9,7 @@
         <!-- Optional theme -->
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" href="assets/css/style.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
     </head>
     <body>
         <div class="sticky-wrap">
@@ -23,42 +24,7 @@
             <div class="container">
                 <div class="row row_a">
                     <div class="col-lg-12">
-                        <div class="panel panel-default panel_main">
-                            <div id="tip" class="label label-default site_tip">Loading...</div>
-                            <div class="panel-heading">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-info" id="rootTxt">首页</button>
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="?pid=-J8cz2Qpn7_rKE2jiImK" data-admin="1" rel="-J8cz2Qpn7_rKE2jiImK">公共模块</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="?pid=1000" rel="1000">首页</a></li>
-                                        <li><a href="?pid=6849421" rel="6849421">商详</a></li>
-                                        <li><a href="?pid=7058932" rel="7058932">搜索-电视</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="?pid=620" rel="620">家电城</a></li>
-                                        <li><a href="?pid=120" rel="120">早市</a></li>
-                                        <li><a href="?pid=150" rel="150">天黑黑</a></li>
-                                        <li><a href="?pid=170" rel="170">团购</a></li>
-                                        <li><a href="?pid=200" rel="200">二手特卖</a></li>
-                                        <li><a href="?pid=610" rel="610">发现</a></li>
-                                        <li><a href="?pid=630" rel="630">逛逛</a></li>
-                                        <li><a href="?pid=690" rel="690">周边</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="?pid=11649770" rel="11649770">我的易迅</a></li>
-                                        <li><a href="?pid=11708430" rel="11708430">我的优惠券</a></li>
-                                        <li><a href="?pid=11594060" rel="11594060">我的订单</a></li>
-                                        <li><a href="?pid=11703220" rel="11703220">我的收藏</a></li>
-                                    </ul>
-                                </div>
-                                <button id="btnAdd" type="button" class="btn btn-default">添加模块</button>
-                            </div>
-                            <div class="panel-body">
-                                <div id="modTree" class="mod_tree">Loading...</div>
-                            </div>
-                        </div>
+                        <div ng-view></div>
                     </div>
                 </div>
             </div> <!-- /container -->
@@ -70,66 +36,15 @@
                 </div>
             </div>
         </div>
-        <div id="editor" class="popover fade right mod_editor">
-            <button type="button" class="close" aria-hidden="true">&times;</button>
-            <div class="arrow"></div>
-            <div class="popover-content">
-                <div class="form-horizontal editor_form" role="form">
-                    <div class="form-group" id="formGroup1">
-                        <label for="iptName" class="col-lg-2 control-label">Name</label>
-                        <div class="col-lg-10">
-                            <input type="text" name="alias" class="form-control" id="iptName" placeholder="模块名称"/>
-                        </div>
-                    </div>
-                    <div class="form-group" id="formGroup2">
-                        <label for="iptYTags" class="col-lg-2 control-label">YTags</label>
-                        <div class="col-lg-10">
-                            <input type="text" name="ytagSelector" class="form-control" id="iptYTags" placeholder="多个ytag以|分隔，或填写css选择器"/>
-                        </div>
-                    </div>
-                    <div id="formRowType" class="form-group form_row1 hide">
-                        <label for="ddlCreateNodePositionType" class="col-lg-2 control-label">Type</label>
-                        <div class="col-lg-10">
-                            <select id="ddlCreateNodePositionType" class="form-control">
-                                <option value="last">子模块</option>
-                                <option value="before">同级模块-靠前</option>
-                                <option value="after">同级模块-靠后</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!--<div id="formGlobalMod" class="form-group">-->
-                        <!--<div class="col-sm-offset-2 col-sm-10">-->
-                            <!--<div class="checkbox">-->
-                                <!--<label>-->
-                                    <!--<input id="isGlobalMod" type="checkbox" value="1"> 是否是全局公共模块-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <button id="btnSave" class="btn btn-default btn_save">保存</button>
-                            <button id="btnDelete" class="btn btn-default btn_del">删除</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--I will compress the staffs bellow when i am being happy!!-->
-        <script src="http://oxox.io/assets/js/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-        <script src="http://oxox.io/assets/js/libs/underscore/underscore-min.js"></script>
-        <script src="http://oxox.io/assets/js/libs/gh3/gh3.js"></script>
-        <script src="http://oxox.io/assets/js/libs/j/1.0.2/j.core.js"></script>
-        <script src="assets/jstree/jstree.js"></script>
-        <script src="assets/js/app.pages.js?v=20131114"></script>
-        <script src="assets/js/app.util.js"></script>
-        <script src="assets/js/app.repo.js"></script>
-        <script src="assets/js/app.tip.js"></script>
-        <script src="assets/js/app.tree.js"></script>
-        <script src="assets/js/app.editor.js"></script>
-        <script src="assets/js/app.auth.js"></script>
-        <script>J.init();</script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script>
+        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.js"></script>
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/services/xlog.js"></script>
+        <script src="assets/js/controllers/page.js"></script>
+        
+
     </body>
 </html>
