@@ -7,8 +7,8 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="page in pages | filter:search | orderBy:'name'">
-    <td><a href="#/edit/{{page.$id}}">{{page.name}}</a></td>
+  <tr ng-repeat="page in pages | filter:search | orderBy:'sn'">
+    <td><a href="mods.html?pid={{page.$id}}">{{page.name}}</a></td>
     <td>{{page.url}}</td>
     <td>
       <a href="#/edit/{{page.$id}}"><i class="glyphicon glyphicon-pencil"></i></a>

@@ -19,6 +19,15 @@
         Not a URL</span>
     </div>
   </div>
+
+  <div class="form-group" ng-class="{error: myForm.sn.$invalid}">
+    <label class="col-lg-2 control-label">SN</label>
+    <div class="col-lg-10">
+      <input type="number" name="sn" ng-model="page.sn" class="form-control"/>
+      <span ng-show="myForm.sn.$error.number" class="help-block">
+        Not a Number</span>
+    </div>
+  </div>
   
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
