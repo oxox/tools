@@ -81,7 +81,6 @@ goto show_summary
     rem ;; if "%YUI_DEBUG%"=="1" pause>nul
     rem ;; exit
     rem ;; uncomment the previous two lines if you wanna exit immediatly when in none-debug mode
-    pause>nul
 
 :remove_utf8_bom
     rem ;; Called From create_utf8bom_free_file Function Create The File Without The BOM In The First line
