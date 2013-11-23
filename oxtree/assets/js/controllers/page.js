@@ -21,9 +21,15 @@ xdataApp.controller('PageCtrl',function($scope,fbXDataPages,RepoPage0,RepoPage1)
                 };
                 tempPage2[c]=tempPage1[c];
             };
+            tempPage2.sn = tempPage2.sn||0;
             pages0.push(tempPage2);
         };
         $scope.canSaveXlog = false;
+        //按SN排序
+        pages0.sort(function(a,b){
+            return (a.sn-b.sn);
+        });
+        //console.log(pages0);
         RepoPage1.update(pages0,function(err,msg){
             $scope.canSaveXlog = true;
             if(err){
