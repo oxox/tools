@@ -1,159 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="一个JS函数。合并import进来的css文件时，对里面的相对路径的图片进行处理"/>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="一个JS函数。合并import进来的css文件时，对里面的相对路径的图片进行处理" />
     <meta name="author" content="oxox.io">
-    <link rel="shortcut icon" href="http://oxox.io/favicon.ico"/>
+    <link rel="shortcut icon" href="http://oxox.io/favicon.ico" />
 
     <title>OXOX.IO - CssMerger</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
     <style>
     /* Space out content a bit */
     body {
-      padding-top: 20px;
-      padding-bottom: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
-
     /* Everything but the jumbotron gets side spacing for mobile first views */
-    .header,
-    .marketing,
-    .footer {
-      padding-left: 15px;
-      padding-right: 15px;
+    .header, .marketing, .footer {
+        padding-left: 15px;
+        padding-right: 15px;
     }
-
     /* Custom page header */
     .header {
-      border-bottom: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
     }
     /* Make the masthead heading the same height as the navigation */
     .header h3 {
-      margin-top: 0;
-      margin-bottom: 0;
-      line-height: 40px;
-      padding-bottom: 19px;
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 40px;
+        padding-bottom: 19px;
     }
-
     /* Custom page footer */
     .footer {
-      padding-top: 19px;
-      color: #777;
-      border-top: 1px solid #e5e5e5;
+        padding-top: 19px;
+        color: #777;
+        border-top: 1px solid #e5e5e5;
     }
-
     /* Customize container */
     @media (min-width: 768px) {
-      .container {
-        max-width: 730px;
-      }
+        .container {
+            max-width: 730px;
+        }
     }
     .container-narrow > hr {
-      margin: 30px 0;
+        margin: 30px 0;
     }
-
     /* Main marketing message and sign up button */
     .jumbotron {
-      text-align: center;
-      border-bottom: 1px solid #e5e5e5;
+        text-align: center;
+        border-bottom: 1px solid #e5e5e5;
     }
     .jumbotron .btn {
-      font-size: 21px;
-      padding: 14px 24px;
+        font-size: 21px;
+        padding: 14px 24px;
     }
-
     /* Supporting marketing content */
     .marketing {
-      margin: 40px 0;
+        margin: 40px 0;
     }
     .marketing p + h4 {
-      margin-top: 28px;
+        margin-top: 28px;
     }
-
     /* Responsive: Portrait tablets and up */
     @media screen and (min-width: 768px) {
-      /* Remove the padding we set earlier */
-      .header,
-      .marketing,
-      .footer {
-        padding-left: 0;
-        padding-right: 0;
-      }
-      /* Space out the masthead */
-      .header {
-        margin-bottom: 30px;
-      }
-      /* Remove the bottom border on the jumbotron for visual effect */
-      .jumbotron {
-        border-bottom: 0;
-      }
+        /* Remove the padding we set earlier */
+        .header, .marketing, .footer {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        /* Space out the masthead */
+        .header {
+            margin-bottom: 30px;
+        }
+        /* Remove the bottom border on the jumbotron for visual effect */
+        .jumbotron {
+            border-bottom: 0;
+        }
     }
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body>
+<body>
 
     <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">Project name</h3>
-      </div>
-
-      <div class="jumbotron">
-        <h1>Jumbotron heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <a href="http://oxox.io">Home</a>
+                </li>
+            </ul>
+            <h3 class="text-muted">CssMerger</h3>
         </div>
 
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+        <div class="row">
 
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+            <div class="form-horizontal" role="form">
+                <div class="form-group frm_row">
+                    <label for="J_cssPath" class="col-sm-3 control-label">CSS路径：</label>
+                    <div class="col-sm-9">
+                        <input value="E:\\root\\css\\index\\index.css" class="form-control" id="J_cssPath" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="J_importCssPath" class="col-sm-3 control-label">import的CSS路径：</label>
+                    <div class="col-sm-9">
+                        <input value="../common/mod/ico.css" class="form-control" id="J_importCssPath"/>
+                    </div>
+                </div>
+                <div class="form-group">
 
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                    <label class="col-sm-3 control-label">import的CSS内容：</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="J_cssText">background:url(../../../img/common/ico.png)
+                        </textarea>
+                    </div>
+                    
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <a href="#" class="btn btn-primary" id="J_btn">开始转换</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="J_result">转换结果：</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="J_result">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
 
-      <div class="footer">
-        <p>&copy; Company 2013</p>
-      </div>
+        <div class="footer">
+            <p>
+                &copy; Company 2013 -
+                <script>
+                document.write(new Date().getFullYear())
+                </script>
+            </p>
+        </div>
 
-    </div> <!-- /container -->
-
+    </div>
+    <!-- /container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-  </body>
+    <script>
+        var btn = document.querySelector('#J_btn');
+        btn.addEventListener('click', function(e){
+          e.preventDefault();
+          var cssPath =  document.querySelector('#J_cssPath').value;
+          var importCssPath =  document.querySelector('#J_importCssPath').value;
+          var importCssText =  document.querySelector('#J_cssText').value;
+          var result = processRelativePath(cssPath, importCssPath, importCssText);
+          document.querySelector('#J_result').value = result;
+        }, false);
+
+
+        function processRelativePath(cssPath, importCssPath, importCssText){
+          var reg = /(background(?:\-image)?\s*:\s*url\(['|"]?)([^'")]*)(['|"]?\))/gi;
+          cssPath = cssPath.split('\\');
+          importCssPath = importCssPath.split('/');
+          var isSibling = importCssPath.length == 1;
+          return importCssText.replace(reg, function(css,before,imgPath,after){
+            if (/^http\S/.test(imgPath) || /^\/\S/.test(imgPath) || isSibling) {//绝对路径or同级跳过
+              return css;
+            } else {
+              imgPath =  imgPath.split('/');
+              imgPath = getRelativePath(cssPath, importCssPath, imgPath);
+              return before + imgPath + after;
+            }
+          });
+        }
+
+        function getRelativePath(cssPath, importCssPath, imgPath){
+          var count1 = 0, count2 = 0, result = '';
+          importCssPath = getFilePath(cssPath, importCssPath);
+          imgPath = getFilePath(importCssPath, imgPath);
+          for (var i = 0, length = cssPath.length; i < length; i++) {
+            if (cssPath[i] == imgPath[i]) {
+              count1 ++;
+            } else {
+              break ;
+            }
+          }
+          count2 = cssPath.length - count1 - 1;
+          for (var i = 0; i < count2; i++) {
+            result += '../';
+          }
+          result = result + imgPath.splice(count1).join('/');
+          return result;
+        }
+
+
+        function getFilePath(basePath, relativePath){
+          var count = 0, array1, array2;
+          for (var i = 0, length = relativePath.length; i < length; i++) {
+            if (relativePath[i] == '..') {
+              count ++;
+            }
+          }
+          array1 = basePath.slice(0, basePath.length - 1 - count);
+          array2 = relativePath.slice(count);
+          return array1.concat(array2);
+        }
+
+    </script>
+</body>
+
 </html>
