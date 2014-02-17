@@ -1,0 +1,24 @@
+<div class="well well-sm clearfix"><button ng-disabled="!canSaveXlog" ng-click="saveToXlog()" class="pull-right btn btn-primary">保存至XLog</button></div>
+<table class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Url (Regex)</th>
+    <th><a href="#/new"><i class="glyphicon glyphicon-plus-sign"></i></a></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="page in pages | filter:search | orderBy:'sn'">
+    <td><a href="mods.html?pid={{page.$id}}">{{page.name}}</a></td>
+    <td>{{page.url}}</td>
+    <td>
+      <a href="#/edit/{{page.$id}}"><i class="glyphicon glyphicon-pencil"></i></a>
+    </td>
+  </tr>
+  <tr ng-show="!pages.length">
+      <td colspan="3">
+        <div class="alert alert-warning">No Records!</div>
+      </td>
+  </tr>
+  </tbody>
+</table>

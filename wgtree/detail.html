@@ -1,0 +1,42 @@
+<form name="myForm" class="form-horizontal" role="form">
+  
+  <div class="form-group" ng-class="{error: myForm.name.$invalid}">
+    <label class="col-lg-2 control-label">Name</label>
+    <div class="col-lg-10">
+      <input type="text" name="name" ng-model="page.name" required class="form-control"/>
+      <span ng-show="myForm.name.$error.required" class="help-block">
+        Required</span>
+    </div>
+  </div>
+ 
+  <div class="form-group" ng-class="{error: myForm.url.$invalid}">
+    <label class="col-lg-2 control-label">Url</label>
+    <div class="col-lg-10">
+      <input type="text" name="url" ng-model="page.url" required class="form-control"/>
+      <span ng-show="myForm.url.$error.required" class="help-block">
+        Required</span>
+      <span ng-show="myForm.url.$error.url" class="help-block">
+        Not a URL</span>
+    </div>
+  </div>
+
+  <div class="form-group" ng-class="{error: myForm.sn.$invalid}">
+    <label class="col-lg-2 control-label">SN</label>
+    <div class="col-lg-10">
+      <input type="number" name="sn" ng-model="page.sn" class="form-control"/>
+      <span ng-show="myForm.sn.$error.number" class="help-block">
+        Not a Number</span>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <a href="#/" class="btn btn-default">Cancel</a>
+      <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid"
+          class="btn btn-primary">Save</button>
+      <button ng-click="destroy()"
+          ng-show="page.id" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+  
+</form>

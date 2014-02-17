@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="xdataApp">
+    <head>
+        <title>OX Tree Builder</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="assets/css/style.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    </head>
+    <body>
+        <div class="sticky-wrap">
+            <!-- Fixed navbar -->
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="http://oxox.io" target="_blank">OX Tree Builder</a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row row_a">
+                    <div class="col-lg-12">
+                        <div ng-view></div>
+                    </div>
+                </div>
+            </div> <!-- /container -->
+        </div>
+        <div class="sticky-footer">
+            <div class="container">
+                <div class="credit">
+                    <p>&copy; OXOX.IO 2013 - <script>document.write(new Date().getFullYear()+1)</script></p>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script>
+        <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.js"></script>
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/services/xlog.js"></script>
+        <script src="assets/js/controllers/page.js"></script>
+        
+
+    </body>
+</html>
