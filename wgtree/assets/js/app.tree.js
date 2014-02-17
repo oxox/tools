@@ -87,7 +87,7 @@ J(function($,p,pub){
          */
         checkIsAdmin:function(){
             var isAdmin = J.auth.checkIdAdmin(),
-                isAdminPage = '-J8cz2Qpn7_rKE2jiImK'==J.util.getPageId();
+                isAdminPage = '-JFzA5V68zvgTk6C2SFZ'==J.util.getPageId();
             //debugger;
             if(isAdminPage && !isAdmin){
                 $('#btnAdd,#btnSave,#btnDelete').remove();
