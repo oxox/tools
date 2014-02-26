@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0025)http://border-radius.com/ -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="description" content="CSS border radius generator for lazy people.">
+	<meta name="keywords" content="css3, border radius, css3 border radius, webkit border radius, firefox border radius">
+	<link rel="shortcut icon" href="img/favicon.png">
+	<title>CSS Border Radius Generator</title>
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+	<div id="logo">
+		CSS Border Radius
+	</div>
+	<div id="credit">
+		Rewritten by <a href="http://vivasky.com/">levinhuang</a> Via jQuery
+	</div>
+	<div id="container">
+		<div class="input_wrapper" id="input_wrapper_tl">
+			<input type="text" id="input_tl" class="chars_1" value="0" />
+		</div>
+		<div class="input_wrapper" id="input_wrapper_tr">
+			<input type="text" id="input_tr" class="chars_1" value="0" />
+		</div>
+		<div class="input_wrapper" id="input_wrapper_br">
+			<input type="text" id="input_br" class="chars_1" value="0" />
+		</div>
+		<div class="input_wrapper" id="input_wrapper_bl">
+			<input type="text" id="input_bl" class="chars_1" value="0" />
+		</div>
+		<div id="surface">
+			<textarea id="code" readonly="readonly"></textarea>
+			<div id="options">
+				<input type="checkbox" checked="checked" id="opt_webkit"/>
+				<label for="opt_webkit">WebKit</label>
+				<input type="checkbox" checked="checked" id="opt_gecko"/>
+				<label for="opt_gecko" class="last">Gecko</label>
+				<input type="checkbox" checked="checked" id="opt_css3"/>
+				<label for="opt_css3">CSS3</label>
+			</div>
+		</div>
+	</div>
+	
+	<script src="http://icase.oa.com/assets/js/lib/jquery-1.7.2.min.js"></script>
+	<script src="http://icase.oa.com/assets/js/lib/jf.core.js"></script>
+	<script src="js/index.js"></script>
+	<script>
+		JF.Init();
+	</script>
+</body>
+</html>

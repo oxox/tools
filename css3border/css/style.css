@@ -1,0 +1,152 @@
+﻿@font-face {
+  font-family: 'Poiret One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Poiret One'), local('PoiretOne-Regular'), url('../../fonts/poiretone/v1/HrI4ZJpJ3Fh0wa5ofYMK8RsxEYwM7FgeyaSgU71cLG0.woff') format('woff');
+}
+html {
+    background: #3d3d3d;
+}
+        
+body {
+    background: #3d3d3d;
+    font: 12px cursive,'Lucida Grande', Arial, sans-serif;
+}
+        
+#logo {
+    width: 283px;
+    height: 35px;
+    text-align:center;
+    font-size:32px;
+    color:#eee;
+    margin: 65px auto 15px auto;
+    font-family:'Poiret One';
+}
+        
+#credit {
+    text-align: center;
+    color: #565656;
+    margin-bottom: 50px;
+    text-transform: lowercase;
+    cursor: default;
+}
+            
+    #credit a {
+        color: #565656;
+        text-decoration: none;
+    }
+            
+    #credit a:hover {
+        color: #5f5f5f;
+    }
+        
+#container {
+    width: 650px;
+    margin: 0 auto;
+    position: relative;
+}
+        
+    #container .input_wrapper {
+        position: absolute;
+        width: 100px;
+        height: 50px;
+    }
+                
+        #container .input_wrapper#input_wrapper_tl {
+            top: -2px;
+            left: -115px;
+            text-align: right;
+        }
+                
+        #container .input_wrapper#input_wrapper_tr {
+            top: -2px;
+            right: -115px;
+            text-align: left;
+        }
+                
+        #container .input_wrapper#input_wrapper_bl {
+            bottom: -2px;
+            left: -115px;
+            text-align: right;
+        }
+                
+        #container .input_wrapper#input_wrapper_br {
+            bottom: -2px;
+            right: -115px;
+            text-align: left;
+        }
+                
+        #container .input_wrapper input {
+            text-align: right;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 82px;
+            padding: 2px 8px;
+            border: 1px solid #2f2f2f;
+            outline: none;
+            background: #393939;
+            font: bold 15px Arial, Helvetica, sans-serif;
+            color: #fff;
+        }
+                
+            #container .input_wrapper#input_wrapper_tr input,
+            #container .input_wrapper#input_wrapper_br input {
+                text-align: left;
+                right: auto;
+                left: 0;
+            }
+                    
+            #container .input_wrapper#input_wrapper_bl input,
+            #container .input_wrapper#input_wrapper_br input {
+                top: auto;
+                bottom: -1px;
+            }
+                
+        #container .input_wrapper input.chars_1 { width: 10px }
+        #container .input_wrapper input.chars_2 { width: 18px }
+        #container .input_wrapper input.chars_3 { width: 26px }
+        #container .input_wrapper input.chars_4 { width: 34px }
+                
+    #container #surface {
+        background: #e9eaee;
+        border: 2px solid #ffffff;
+        padding: 44px 40px 20px 40px;
+        width: 560px;
+        margin: 0 auto;
+        text-align: center;
+        box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+        -moz-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+        -webkit-box-shadow: 1px 2px 6px rgba(0,0,0, 0.5);
+    }
+            
+        #container #surface textarea {
+            background: #fafafc;
+            border: 1px solid #a3a3a3;
+            resize: none;
+            width: 530px;
+            height: 340px;
+            outline: none;
+            font: normal 15px Monaco, 'Courier New', monospace;
+            line-height: 20px;
+            padding: 9px 10px;
+            color: #2f2f2f;
+            overflow: hidden;
+        }
+                
+        #container #surface #options {
+            margin: 10px 0 0 0;
+        }
+                
+            #container #surface #options input {
+                margin-right: 2px;
+            }
+                    
+            #container #surface #options label {
+                margin-right: 6px;
+                color: #393939;
+            }
+                    
+            #container #surface #options label.last {
+                margin-right: 0;
+            }
